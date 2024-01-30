@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Testing API</title>
+  <link rel="stylesheet" href="css/output.css">
+</head>
+<body>
+  <h4 class="text-xl font-bold mx-5">This is a test for an ASP.NET Web API</h4>
+
+  <div class="flex justify-start items-center border w-fit mx-5">
+
+    <div class="m-5 border p-5 rounded-xl">
+      <h4 class="font-bold">Create a new pokemon</h4>
+      <form method="post" action="/postRequest">
+        <div class="flex flex-col">
+          <label for="Name">Name:</label>
+          <input type="text" name="Name" class="border-2">
+        </div>
+        <div class="flex flex-col">
+          <label for="PrimaryType">Primary type:</label>
+          <input type="text" name="PrimaryType" class="border-2">
+        </div>
+        <div class="flex flex-col">
+          <label for="SecondaryType">Secondary type:</label>
+          <input type="text" name="SecondaryType" class="border-2">
+        </div>
+        <div class="flex flex-col">
+          <label for="TrainerId">Trainer Id:</label>
+          <input type="number" name="TrainerId" class="border-2">
+        </div>
+        <button type="submit" class="mt-4 mx-auto bg-blue-600 text-white py-1 px-4 rounded-full text-sm">Save</button>
+      </form>
+    </div>
+
+    <% if (pokemons != undefined) { %>
+      <% pokemons.forEach(pokemon => { %>
+        <!-- POKEMON'S INFORMATION CARD -->
+        <div class="border-2 borde-black p-5 m-5 rounded-xl">
+          <div><span class="font-bold">Id:</span> <%= pokemon.id %></div>
+          <div><span class="font-bold">Name:</span> <%= pokemon.name %></div>
+          <div><span class="font-bold">Primary type:</span> <%= pokemon.primaryType %></div>
+          <div><span class="font-bold">Primary type:</span> <%= pokemon.secondaryType %></div>
+          <div class="flex justify-between">
+            <form method="post" action="/deleteRequest">
+              <input type="hidden" value="<%= pokemon.id %>" name="PokemonId">
+              <button type="submit" class="bg-red-600 text-white py-1 px-4 text-sm font-bold rounded-full">Delete</button>
+            </form>
+            <form method="post" action="/getByIdRequest" class="ml-2">
+              <input type="hidden" value="<%= pokemon.id %>" name="PokemonId">
+              <button type="submit" class="bg-blue-600 text-white py-1 px-4 text-sm font-bold rounded-full">Edit</button>
+            </form>
+          </div>
+        </div>
+        <!-- POKEMON'S INFORMATION CARD -->
+      <% }); %>
+    <% } else { %>
+      <div class="flex flex-col m-5">
+        <h4 class="text-red-600 font-bold text-lg">There's no information to show.</h4>
+        <p class="text-red-600 text-sm">Possible reasons:</p>
+        <ol class="list-disc pl-10">
+          <li class="text-red-600 text-sm">The API is not running.</li>
+          <li class="text-red-600 text-sm">There was an error getting all the information from the API.</li>
+        </ol>
+      </div>
+    <% } %>
+  </div>
+
+</body>
+</html>
